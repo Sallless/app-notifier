@@ -3,7 +3,7 @@ name: IaC Lifecycle
 on:
   push:
     branches:
-    - main
+    - develop
 
 jobs:
 
@@ -31,7 +31,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id    : ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRETS_ACCESS_KEY }}
         aws-session-token    : ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region           : us-east-1
 
@@ -42,12 +42,12 @@ jobs:
       run : terraform -chdir=./terraform validate
 
     - name: Step 07 - Terraform Plan
-      # run : terraform -chdir=./terraform plan -input=false -out tfplan
-      run : terraform -chdir=./terraform plan -input=false -destroy -out tfplan
+      run : terraform -chdir=./terraform plan -input=false -out tfplan
+      #run : terraform -chdir=./terraform plan -input=false -destroy -out tfplan
 
     - name: Step 08 - Terraform Apply
       run : terraform -chdir=./terraform apply -auto-approve -input=false tfplan
 
     - name: Step 09 - Terraform Show
       run : terraform -chdir=./terraform show
-  
+      
