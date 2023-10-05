@@ -1,7 +1,7 @@
 # MODULES ORCHESTRATOR
 
-module "rede" {
-    source               = "./modules/rede"
+module "redes" {
+    source               = "./modules/redes"
     vpc_cidr             = "10.0.0.0/16"
     vpc_az1              = "${var.vpc_az1}"
     vpc_az2              = "${var.vpc_az2}"
@@ -20,9 +20,9 @@ module "dados" {
     rds_dbname           = "${var.rds_dbname}"
     rds_dbuser           = "${var.rds_dbuser}"
     rds_dbpassword       = "${var.rds_dbpassword}"
-    vpc_sn_priv_az1_id   = "${module.rede.vpc_sn_priv_az1_id}"
-    vpc_sn_priv_az2_id   = "${module.rede.vpc_sn_priv_az2_id}"
-    vpc_sg_priv_id       = "${module.rede.vpc_sg_priv_id}"
+    vpc_sn_priv_az1_id   = "${module.redes.vpc_sn_priv_az1_id}"
+    vpc_sn_priv_az2_id   = "${module.redes.vpc_sn_priv_az2_id}"
+    vpc_sg_priv_id       = "${module.redes.vpc_sg_priv_id}"
 }
 
 module "compute" {
@@ -38,10 +38,10 @@ module "compute" {
     ec2_asg_min_size         = "${var.ec2_asg_min_size}"
     ec2_asg_max_size         = "${var.ec2_asg_max_size}"
     vpc_cidr                 = "${var.vpc_cidr}"
-    vpc_id                   = "${module.rede.vpc_id}"
-    vpc_sn_pub_az1_id        = "${module.rede.vpc_sn_pub_az1_id}"
-    vpc_sn_pub_az2_id        = "${module.rede.vpc_sn_pub_az2_id}"
-    vpc_sg_pub_id            = "${module.rede.vpc_sg_pub_id}"
+    vpc_id                   = "${module.redes.vpc_id}"
+    vpc_sn_pub_az1_id        = "${module.redes.vpc_sn_pub_az1_id}"
+    vpc_sn_pub_az2_id        = "${module.redes.vpc_sn_pub_az2_id}"
+    vpc_sg_pub_id            = "${module.redes.vpc_sg_pub_id}"
     rds_endpoint             = "${module.dados.rds_endpoint}"
     rds_dbuser               = "${var.rds_dbuser}"
     rds_dbpassword           = "${var.rds_dbpassword}"
